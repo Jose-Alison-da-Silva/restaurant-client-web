@@ -1,9 +1,9 @@
-import { useNavigate } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import Header from "../components/Header/Header";
-import NavigationButton from "../components/NavigationButton/NavigationButton";
-import HistoryTableRow from "../components/HistoryTableRow/HistoryTableRow";
-import { useAuth } from "../contexts/AuthContext";
+import { useQuery } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
+import Header from '../components/Header/Header';
+import HistoryTableRow from '../components/HistoryTableRow/HistoryTableRow';
+import NavigationButton from '../components/NavigationButton/NavigationButton';
+import { useAuth } from '../contexts/AuthContext';
 
 interface HistoryOrder {
   id: number;
@@ -19,9 +19,9 @@ export default function History() {
   const { user, api } = useAuth();
 
   const { data: orders = [], isLoading } = useQuery({
-    queryKey: ["history"],
+    queryKey: ['history'],
     queryFn: async (): Promise<HistoryOrder[]> => {
-      const response = await api.get("/pedidos/historico");
+      const response = await api.get('/pedidos');
       return response.data;
     },
   });
@@ -32,14 +32,14 @@ export default function History() {
 
   const formatDateTime = (dateString: string) => {
     const date = new Date(dateString);
-    const formattedDate = date.toLocaleDateString("pt-BR", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
+    const formattedDate = date.toLocaleDateString('pt-BR', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
     });
-    const formattedTime = date.toLocaleTimeString("pt-BR", {
-      hour: "2-digit",
-      minute: "2-digit",
+    const formattedTime = date.toLocaleTimeString('pt-BR', {
+      hour: '2-digit',
+      minute: '2-digit',
     });
     return { date: formattedDate, time: formattedTime };
   };
@@ -64,21 +64,21 @@ export default function History() {
         <div className="flex justify-center gap-6 mb-8">
           <NavigationButton
             title="PEDIDOS"
-            onClick={() => handleNavigationClick("/dashboard")}
+            onClick={() => handleNavigationClick('/dashboard')}
             variant="secondary"
           />
 
-          {user?.role === "ADMIN" && (
+          {user?.role === 'ADMIN' && (
             <NavigationButton
               title="PRODUTOS"
-              onClick={() => handleNavigationClick("/products")}
+              onClick={() => handleNavigationClick('/products')}
               variant="secondary"
             />
           )}
 
           <NavigationButton
             title="HISTÓRICO"
-            onClick={() => handleNavigationClick("/history")}
+            onClick={() => handleNavigationClick('/history')}
             variant="primary"
           />
         </div>
@@ -144,53 +144,6 @@ export default function History() {
             </div>
           )}
         </div>
-
-        {/* Summary Section */}
-        {orders.length > 0 && (
-          <div className="mt-8 bg-amarelo-principal rounded-lg p-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-              <div>
-                <h3 className="text-vermelho-principal font-bold font-roboto text-lg mb-2">
-                  TOTAL DE PEDIDOS
-                </h3>
-                <p className="text-vermelho-principal font-bold font-roboto text-2xl">
-                  {orders.length}
-                </p>
-              </div>
-
-              <div>
-                <h3 className="text-vermelho-principal font-bold font-roboto text-lg mb-2">
-                  VALOR TOTAL
-                </h3>
-                <p className="text-vermelho-principal font-bold font-roboto text-2xl">
-                  {orders
-                    .reduce((total, order) => total + order.valorTotal, 0)
-                    .toLocaleString("pt-BR", {
-                      style: "currency",
-                      currency: "BRL",
-                    })}
-                </p>
-              </div>
-
-              <div>
-                <h3 className="text-vermelho-principal font-bold font-roboto text-lg mb-2">
-                  TICKET MÉDIO
-                </h3>
-                <p className="text-vermelho-principal font-bold font-roboto text-2xl">
-                  {(
-                    orders.reduce(
-                      (total, order) => total + order.valorTotal,
-                      0
-                    ) / orders.length
-                  ).toLocaleString("pt-BR", {
-                    style: "currency",
-                    currency: "BRL",
-                  })}
-                </p>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );

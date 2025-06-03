@@ -1,4 +1,9 @@
-export type OrderStatus = "PENDENTE" | "EM_PREPARO" | "ENTREGUE" | "CONCLUIDO";
+export type OrderStatus =
+  | "PENDENTE"
+  | "EM_PREPARO"
+  | "ENTREGUE"
+  | "CONCLUIDO"
+  | "LIVRE";
 
 interface TableCardProps {
   tableNumber: number;
@@ -24,6 +29,11 @@ const statusConfig = {
   },
   CONCLUIDO: {
     label: "CONCLUÍDO",
+    bgColor: "bg-gray-500",
+    textColor: "text-white",
+  },
+  LIVRE: {
+    label: "LIVRE",
     bgColor: "bg-gray-500",
     textColor: "text-white",
   },

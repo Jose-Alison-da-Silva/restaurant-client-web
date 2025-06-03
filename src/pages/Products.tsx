@@ -35,8 +35,9 @@ export default function Products() {
 
   // Mutação para alterar status do produto
   const toggleProductStatusMutation = useMutation({
-    mutationFn: async ({ id, ativo }: { id: number; ativo: boolean }) => {
-      await api.patch(`/produtos/${id}`, { ativo });
+    mutationFn: async ({ id }: { id: number; ativo?: boolean }) => {
+      // await api.patch(`/produtos/${id}`, { ativo });
+      await api.delete(`/produtos/${id}`);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["products"] });

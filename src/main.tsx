@@ -1,12 +1,16 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import "./index.css";
-import App from "./App.tsx";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { AuthProvider } from "./contexts/AuthContext.tsx";
+import App from "./App.tsx";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
+import { AuthProvider } from "./contexts/AuthContext.tsx";
+import "./index.css";
+import AddCategory from "./pages/AddCategory.tsx";
+import AddEditProduct from "./pages/AddEditProduct.tsx";
+import AddTable from "./pages/AddTable.tsx";
 import Dashboard from "./pages/Dashboard.tsx";
+import History from "./pages/History.tsx";
 import OrderDetails from "./pages/OrderDetails.tsx";
 import Products from "./pages/Products.tsx";
 
@@ -32,10 +36,50 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/produtos",
+    path: "/products",
     element: (
       <ProtectedRoute allowedRoles={["ADMIN"]}>
         <Products />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/categories/add",
+    element: (
+      <ProtectedRoute allowedRoles={["ADMIN"]}>
+        <AddCategory />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/products/add",
+    element: (
+      <ProtectedRoute allowedRoles={["ADMIN"]}>
+        <AddEditProduct />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/tables/add",
+    element: (
+      <ProtectedRoute allowedRoles={["ADMIN"]}>
+        <AddTable />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/history",
+    element: (
+      <ProtectedRoute allowedRoles={["ADMIN"]}>
+        <History />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/products/edit/:id",
+    element: (
+      <ProtectedRoute allowedRoles={["ADMIN"]}>
+        <AddEditProduct />
       </ProtectedRoute>
     ),
   },
